@@ -4,7 +4,12 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": ["prettier", "eslint-plugin-import-helpers", "react", "@typescript-eslint"],
+  "plugins": [
+    "prettier",
+    "eslint-plugin-import-helpers",
+    "react",
+    "@typescript-eslint"
+  ],
   "extends": [
     "prettier",
     "plugin:react/recommended",
@@ -61,6 +66,7 @@
     ],
     "import-helpers/order-imports": "off",
     "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
     "react/prop-types": "off"
   }
 }
