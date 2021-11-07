@@ -9,14 +9,14 @@ import {
 import React, { ChangeEvent, useState } from 'react'
 
 interface PasswordInputProps {
-  errors: { password: string }
+  error: string
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
   value: string
   name?: string
 }
 
 export function PasswordInput({
-  errors,
+  error,
   value,
   handleInputChange,
   name = 'Password',
@@ -26,7 +26,7 @@ export function PasswordInput({
   const handleToggleShowPassword = () => setShowPassword(!showPassword)
 
   return (
-    <FormControl invalid={Boolean(errors.password)}>
+    <FormControl invalid={Boolean(error)}>
       <FormLabel>
         {name}
         <RequiredIndicator />
@@ -53,7 +53,7 @@ export function PasswordInput({
           </Button>
         </Input.RightElement>
       </Input.Group>
-      <FormErrorMessage>{errors.password}</FormErrorMessage>
+      <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   )
 }

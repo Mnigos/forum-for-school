@@ -68,13 +68,13 @@ export default function LoginForm() {
       onSubmit={handleSubmitLogin}
     >
       <UsernameInput
-        errors={errors}
+        error={errors.username}
         value={formValues.username}
         handleInputChange={handleInputChange}
       />
 
       <PasswordInput
-        errors={errors}
+        error={errors.password}
         value={formValues.password}
         handleInputChange={handleInputChange}
       />

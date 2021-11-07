@@ -8,18 +8,18 @@ import {
 import React, { ChangeEvent } from 'react'
 
 interface UsernameInputProps {
-  errors: { username: string }
+  error: string
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
   value: string
 }
 
 export default function UsernameInput({
-  errors,
+  error,
   value,
   handleInputChange,
 }: UsernameInputProps) {
   return (
-    <FormControl invalid={Boolean(errors.username)}>
+    <FormControl invalid={Boolean(error)}>
       <FormLabel>
         Username
         <RequiredIndicator />
@@ -31,7 +31,7 @@ export default function UsernameInput({
         onChange={handleInputChange}
         value={value}
       />
-      <FormErrorMessage>{errors.username}</FormErrorMessage>
+      <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   )
 }
