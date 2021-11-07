@@ -1,8 +1,12 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { VechaiProvider, Button } from '@vechaiui/react'
+import { AppProps } from 'next/dist/shared/lib/router/router'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <VechaiProvider>
+      <Button>Hello Vechai</Button>
+      <Component {...pageProps} />
+    </VechaiProvider>
+  )
 }
-
-export default MyApp
