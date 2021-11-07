@@ -13,13 +13,15 @@ interface PasswordInputProps {
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
   value: string
   name?: string
+  label?: string
 }
 
 export function PasswordInput({
   error,
   value,
   handleInputChange,
-  name = 'Password',
+  name = 'password',
+  label = 'Password',
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -28,14 +30,14 @@ export function PasswordInput({
   return (
     <FormControl invalid={Boolean(error)}>
       <FormLabel>
-        {name}
+        {label}
         <RequiredIndicator />
       </FormLabel>
 
       <Input.Group>
         <Input
           placeholder="Enter your password"
-          name="password"
+          name={name}
           onChange={handleInputChange}
           value={value}
           type={showPassword ? 'text' : 'password'}
