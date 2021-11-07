@@ -1,7 +1,13 @@
 import type { NextPage } from 'next'
+import Router from 'next/router'
 import Head from 'next/head'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    Router.push('/auth/register')
+  })
+
   return (
     <div>
       <Head>
