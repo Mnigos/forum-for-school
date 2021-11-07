@@ -12,12 +12,14 @@ interface PasswordInputProps {
   errors: { password: string }
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
   value: string
+  name?: string
 }
 
 export function PasswordInput({
   errors,
   value,
   handleInputChange,
+  name = 'Password',
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -26,7 +28,7 @@ export function PasswordInput({
   return (
     <FormControl invalid={Boolean(errors.password)}>
       <FormLabel>
-        Password
+        {name}
         <RequiredIndicator />
       </FormLabel>
 
