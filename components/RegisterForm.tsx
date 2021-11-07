@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button } from '@vechaiui/button'
+import Link from 'next/link'
+import { Link as StyledLink } from '@vechaiui/react'
 
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
@@ -115,6 +117,12 @@ export default function RegisterForm() {
       <Button className="mt-4 cursor-pointer" type="submit">
         Register
       </Button>
+
+      <StyledLink className="cursor-pointer">
+        <Link href="/auth/login" passHref>
+          Already got accout?
+        </Link>
+      </StyledLink>
     </form>
   )
 }
