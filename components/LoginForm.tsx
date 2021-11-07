@@ -1,12 +1,8 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  RequiredIndicator,
-} from '@vechaiui/forms'
 import { Button } from '@vechaiui/react'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+
+import { PasswordInput } from './PasswordInput'
+import UsernameInput from './UsernameInput'
 
 import { LoginState } from '~/interfaces/LoginState'
 import { capitalize } from '~/utils/capitalize'
@@ -74,52 +70,21 @@ export default function LoginForm() {
       className="flex flex-col max-w-xs gap-4 p-8 bg-gray-100 rounded-xl"
       onSubmit={handleSubmitLogin}
     >
-      <FormControl invalid={Boolean(errors.username)}>
-        <FormLabel>
-          Username
-          <RequiredIndicator />
-        </FormLabel>
+      <UsernameInput
+        errors={errors}
+        value={formValues.username}
+        handleInputChange={handleInputChange}
+      />
 
-        <Input
-          placeholder="Enter your username"
-          name="username"
-          onChange={handleInputChange}
-          value={formValues.username}
-        />
-        <FormErrorMessage>{errors.username}</FormErrorMessage>
-      </FormControl>
+      <PasswordInput
+        errors={errors}
+        value={formValues.password}
+        showPassword={showPassword}
+        handleToggleShowPassword={handleToggleShowPassword}
+        handleInputChange={handleInputChange}
+      />
 
-      <FormControl invalid={Boolean(errors.password)}>
-        <FormLabel>
-          Password
-          <RequiredIndicator />
-        </FormLabel>
-
-        <Input.Group>
-          <Input
-            placeholder="Enter your password"
-            name="password"
-            onChange={handleInputChange}
-            value={formValues.password}
-            type={showPassword ? 'text' : 'password'}
-          />
-
-          <Input.RightElement className="w-14">
-            <Button
-              className="cursor-pointer"
-              type="button"
-              size="xs"
-              variant="solid"
-              onClick={handleToggleShowPassword}
-            >
-              {showPassword ? 'Hide' : 'Show'}
-            </Button>
-          </Input.RightElement>
-        </Input.Group>
-        <FormErrorMessage>{errors.password}</FormErrorMessage>
-      </FormControl>
-
-      <Button className="mt-4 cursor-pointer" type="submit" onClick={() => {}}>
+      <Button className="mt-4 cursor-pointer" type="submit">
         Login
       </Button>
     </form>
