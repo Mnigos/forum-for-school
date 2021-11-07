@@ -13,11 +13,8 @@ const initialLoginState: LoginState = {
 }
 
 export default function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false)
   const [formValues, setFormValues] = useState(initialLoginState)
   const [errors, setError] = useState(initialLoginState)
-
-  const handleToggleShowPassword = () => setShowPassword(!showPassword)
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -79,8 +76,6 @@ export default function LoginForm() {
       <PasswordInput
         errors={errors}
         value={formValues.password}
-        showPassword={showPassword}
-        handleToggleShowPassword={handleToggleShowPassword}
         handleInputChange={handleInputChange}
       />
 

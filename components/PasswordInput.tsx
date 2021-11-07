@@ -6,23 +6,23 @@ import {
   Input,
   RequiredIndicator,
 } from '@vechaiui/react'
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 interface PasswordInputProps {
   errors: { password: string }
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
-  showPassword: boolean
   value: string
-  handleToggleShowPassword: () => void
 }
 
 export function PasswordInput({
   errors,
   value,
-  showPassword,
-  handleToggleShowPassword,
   handleInputChange,
 }: PasswordInputProps) {
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleToggleShowPassword = () => setShowPassword(!showPassword)
+
   return (
     <FormControl invalid={Boolean(errors.password)}>
       <FormLabel>
