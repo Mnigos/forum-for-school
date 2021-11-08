@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CreatePostCard from '~/components/CreatePostCard'
+import CreatePostCard from '~/components/posts/CreatePostCard'
 import { DialogProvider } from '~/providers/DialogProvider'
 
 export default function Home() {
