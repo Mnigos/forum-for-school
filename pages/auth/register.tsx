@@ -1,5 +1,5 @@
-import AuthAbout from '~/components/AuthAbout'
-import RegisterForm from '~/components/RegisterForm'
+import AuthAbout from '~/components/auth/AuthAbout'
+import RegisterForm from '~/components/auth/RegisterForm'
 import DefaultLayout from '~/layouts/default'
 
 export default function Login() {
