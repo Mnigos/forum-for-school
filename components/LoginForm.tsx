@@ -1,6 +1,7 @@
 import { Button, Link as StyledLink } from '@vechaiui/react'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
@@ -14,6 +15,8 @@ const initialLoginState: LoginState = {
 }
 
 export default function LoginForm() {
+  const router = useRouter()
+  const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialLoginState)
   const [errors, setError] = useState(initialLoginState)
 
@@ -56,11 +59,14 @@ export default function LoginForm() {
     return !password && !username ? true : false
   }
 
-  function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
+  function handleSubmitLogin(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
 
-    // eslint-disable-next-line no-console
-    if (validate(formValues)) console.log('logged in!')
+    if (!validate(formValues)) return
+    setLoading(true)
+    setTimeout(() => {
+      router.push('/')
+    }, 1000)
   }
 
   return (
@@ -80,7 +86,7 @@ export default function LoginForm() {
         handleInputChange={handleInputChange}
       />
 
-      <Button className="mt-4 cursor-pointer" type="submit">
+      <Button className="mt-4 cursor-pointer" type="submit" loading={isLoading}>
         Login
       </Button>
 

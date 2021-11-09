@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button } from '@vechaiui/button'
 import Link from 'next/link'
 import { Link as StyledLink } from '@vechaiui/react'
+import { useRouter } from 'next/router'
 
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
@@ -21,6 +22,8 @@ const initialRegisterState: RegisterState = {
 }
 
 export default function RegisterForm() {
+  const router = useRouter()
+  const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialRegisterState)
   const [errors, setError] = useState(initialRegisterState)
 
@@ -82,11 +85,14 @@ export default function RegisterForm() {
     return !password && !username && !repeatedPassword ? true : false
   }
 
-  function handleSubmitLogin(event: FormEvent<HTMLFormElement>) {
+  function handleSubmitLogin(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
 
-    // eslint-disable-next-line no-console
-    if (validate(formValues)) console.log('registered!')
+    if (!validate(formValues)) return
+    setLoading(true)
+    setTimeout(() => {
+      router.push('/')
+    }, 1000)
   }
 
   return (
@@ -114,7 +120,7 @@ export default function RegisterForm() {
         handleInputChange={handleInputChange}
       />
 
-      <Button className="mt-4 cursor-pointer" type="submit">
+      <Button className="mt-4 cursor-pointer" type="submit" loading={isLoading}>
         Register
       </Button>
 
