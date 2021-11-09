@@ -2,6 +2,7 @@ import React from 'react'
 
 import CreatePostCard from '~/components/posts/CreatePostCard'
 import PostCard from '~/components/posts/PostCard'
+import DefaultLayout from '~/layouts/default'
 import { DialogProvider } from '~/providers/DialogProvider'
 
 const loremIpsum =
@@ -24,16 +25,18 @@ const cards = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-20">
-      <DialogProvider>
-        <CreatePostCard />
-      </DialogProvider>
+    <DefaultLayout>
+      <div className="flex flex-col items-center justify-center min-h-screen gap-20">
+        <DialogProvider>
+          <CreatePostCard />
+        </DialogProvider>
 
-      <div className="flex flex-col gap-5">
-        {cards.map(({ title, body }, index) => (
-          <PostCard title={title} body={body} key={index} />
-        ))}
+        <div className="flex flex-col gap-5">
+          {cards.map(({ title, body }, index) => (
+            <PostCard title={title} body={body} key={index} />
+          ))}
+        </div>
       </div>
-    </div>
+    </DefaultLayout>
   )
 }

@@ -1,9 +1,12 @@
 import LoginForm from '~/components/LoginForm'
+import DefaultLayout from '~/layouts/default'
 
 export default function Login() {
   return (
-    <div className="flex items-center justify-center min-h-[80vh]">
-      <LoginForm />
-    </div>
+    <DefaultLayout>
+      <div className="flex items-center justify-center min-h-[80vh]">
+        <LoginForm />
+      </div>
+    </DefaultLayout>
   )
 }
