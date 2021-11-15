@@ -1,4 +1,4 @@
-import { Button, Link as StyledLink } from '@vechaiui/react'
+import { Button, FormErrorMessage, Link as StyledLink } from '@vechaiui/react'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
 
+import { post } from '~/axios-instance'
 import { LoginState } from '~/interfaces/LoginState'
 import { capitalize } from '~/utils/capitalize'
 
@@ -14,13 +15,38 @@ const initialLoginState: LoginState = {
   password: '',
 }
 
+const initialErrorState: LoginState & { message: string } = {
+  ...initialLoginState,
+  message: '',
+}
+
 export default function LoginForm() {
   const router = useRouter()
   const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialLoginState)
-  const [errors, setError] = useState(initialLoginState)
+  const [errors, setError] = useState(initialErrorState)
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  async function authenticate(
+    values: LoginState
+  ): Promise<{ access_token: string } | boolean> {
+    const credentials = {
+      nameOrEmail: values.username,
+      pass: values.password,
+    }
+
+    try {
+      return (await post('/auth/login', credentials)).data
+    } catch {
+      setError({
+        ...errors,
+        message: 'Wrong login or password',
+      })
+
+      return false
+    }
+  }
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
     const { name, value } = event.target
 
     if (!value)
@@ -52,6 +78,7 @@ export default function LoginForm() {
     const { username, password } = foundedErrors
 
     setError({
+      ...errors,
       username,
       password,
     })
@@ -59,14 +86,25 @@ export default function LoginForm() {
     return !password && !username ? true : false
   }
 
-  function handleSubmitLogin(event: FormEvent<HTMLFormElement>): void {
+  async function handleSubmitLogin(
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault()
 
     if (!validate(formValues)) return
+
     setLoading(true)
-    setTimeout(() => {
-      router.push('/')
-    }, 1000)
+
+    const response = await authenticate(formValues)
+
+    if (!response) {
+      setLoading(false)
+
+      return
+    }
+
+    setLoading(false)
+    router.push('/')
   }
 
   return (
@@ -89,6 +127,8 @@ export default function LoginForm() {
       <Button className="mt-4 cursor-pointer" type="submit" loading={isLoading}>
         Login
       </Button>
+
+      <FormErrorMessage>{errors.message}</FormErrorMessage>
 
       <StyledLink className="cursor-pointer">
         <Link href="/auth/register" passHref>
