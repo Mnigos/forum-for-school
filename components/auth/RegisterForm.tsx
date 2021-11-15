@@ -8,6 +8,8 @@ import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
 
 import { capitalize } from '~/utils/capitalize'
+import { User } from '~/interfaces/User'
+import { post } from '~/axios-instance'
 
 interface RegisterState {
   username: string
@@ -26,6 +28,21 @@ export default function RegisterForm() {
   const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialRegisterState)
   const [errors, setError] = useState(initialRegisterState)
+
+  async function register(
+    values: User
+  ): Promise<{ access_token: string } | boolean> {
+    const credentials = {
+      name: values.username,
+      pass: values.password,
+    }
+
+    try {
+      return (await post('/auth/register', credentials)).data
+    } catch {
+      return false
+    }
+  }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -85,14 +102,26 @@ export default function RegisterForm() {
     return !password && !username && !repeatedPassword ? true : false
   }
 
-  function handleSubmitLogin(event: FormEvent<HTMLFormElement>): void {
+  async function handleSubmitLogin(
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault()
 
     if (!validate(formValues)) return
     setLoading(true)
-    setTimeout(() => {
-      router.push('/')
-    }, 1000)
+
+    const { username, password } = formValues
+
+    const response = await register({ username, password })
+
+    if (!response) {
+      setLoading(false)
+
+      return
+    }
+
+    setLoading(false)
+    router.push('/')
   }
 
   return (
