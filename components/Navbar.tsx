@@ -27,8 +27,8 @@ export default function Navbar() {
   const clickTab = () => changeSelected(true)
 
   return (
-    <div className="flex justify-between w-screen p-4 px-16">
-      <Tabs.Root className="flex flex-col" defaultValue="">
+    <div className="flex justify-between w-screen py-4">
+      <Tabs.Root className="flex flex-col mx-12" defaultValue="">
         <Tabs.List className="flex flex-row justify-start">
           {tabs.map((tab, index) => (
             <Link href={tab.link} key={index} passHref>
@@ -52,7 +52,7 @@ export default function Navbar() {
         </Tabs.List>
       </Tabs.Root>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 mx-6">
         <Link href="/auth/login" passHref>
           <Button color="primary" className="cursor-pointer">
             Login

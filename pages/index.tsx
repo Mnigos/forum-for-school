@@ -31,7 +31,7 @@ export default function Home() {
           <CreatePostCard />
         </DialogProvider>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 w-3/4">
           {cards.map(({ title, body }, index) => (
             <PostCard title={title} body={body} key={index} />
           ))}
