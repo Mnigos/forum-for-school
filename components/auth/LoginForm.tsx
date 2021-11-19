@@ -2,6 +2,7 @@ import { Button, FormErrorMessage, Link as StyledLink } from '@vechaiui/react'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
@@ -9,6 +10,7 @@ import UsernameInput from './UsernameInput'
 import { post } from '~/axios-instance'
 import { LoginState } from '~/interfaces/LoginState'
 import { capitalize } from '~/utils/capitalize'
+import { saveToken } from '~/utils/saveToken'
 
 const initialLoginState: LoginState = {
   username: '',
@@ -22,13 +24,14 @@ const initialErrorState: LoginState & { message: string } = {
 
 export default function LoginForm() {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialLoginState)
   const [errors, setError] = useState(initialErrorState)
 
   async function authenticate(
     values: LoginState
-  ): Promise<{ access_token: string } | boolean> {
+  ): Promise<{ access_token: string } | false> {
     const credentials = {
       nameOrEmail: values.username,
       pass: values.password,
@@ -97,14 +100,14 @@ export default function LoginForm() {
 
     const response = await authenticate(formValues)
 
-    if (!response) {
+    if (response) {
       setLoading(false)
 
-      return
+      saveToken(response.access_token, dispatch)
+      router.push('/')
     }
 
     setLoading(false)
-    router.push('/')
   }
 
   return (
