@@ -9,10 +9,7 @@ interface PostCardProps {
 
 export default function PostCard({ title, body }: PostCardProps) {
   return (
-    <div className="flex flex-col w-[1000px] gap-4 p-8 bg-gray-100  rounded-xl">
-      {/* <h2 className="text-xl font-bold">{title}</h2>
-      <p>{body}</p> */}
-
+    <div className="flex flex-col gap-4 p-8 bg-gray-100  rounded-xl">
       <Disclosure>
         {({ open }) => (
           <>

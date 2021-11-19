@@ -9,16 +9,6 @@ module.exports = {
     './node_modules/@vechaiui/**/*.{js,ts,jsx,tsx}', // path to vechaiui
   ],
   darkMode: 'class', // or 'media' or 'class'
-  theme: {
-    extend: {
-      colors: {
-        pirmary: '#4300fc',
-      },
-      outline: {
-        primary: '#4300fc',
-      },
-    },
-  },
   variants: {
     extend: {},
   },
