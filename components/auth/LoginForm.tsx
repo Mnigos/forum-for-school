@@ -31,7 +31,7 @@ export default function LoginForm() {
 
   async function authenticate(
     values: LoginState
-  ): Promise<{ access_token: string } | false> {
+  ): Promise<{ access_token: string; username: string } | false> {
     const credentials = {
       nameOrEmail: values.username,
       pass: values.password,

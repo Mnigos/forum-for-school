@@ -9,7 +9,6 @@ import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
 
 import { capitalize } from '~/utils/capitalize'
-import { User } from '~/interfaces/User'
 import { post } from '~/axios-instance'
 import { saveToken } from '~/utils/saveToken'
 
@@ -33,7 +32,7 @@ export default function RegisterForm() {
   const [errors, setError] = useState(initialRegisterState)
 
   async function register(
-    values: User
+    values: Omit<RegisterState, 'repeatedPassword'>
   ): Promise<{ access_token: string } | false> {
     const credentials = {
       name: values.username,
