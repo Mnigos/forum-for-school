@@ -7,9 +7,14 @@ import {
 
 import reducers from './reducers'
 
-export const store = createStore(reducers, {}, applyMiddleware(thunk))
+import { User } from '~/interfaces/User'
+
+export const store = createStore(reducers, applyMiddleware(thunk))
 
 export const useSelector: TypedUseSelectorHook<RootState> = useGenericSelector
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = {
+  token: string
+  user: User
+}
 export type AppDispatch = typeof store.dispatch

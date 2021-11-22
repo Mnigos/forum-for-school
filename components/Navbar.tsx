@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
-import { RootState, useSelector } from '~/store'
+import { useSelector } from '~/store'
 
 interface Tab {
   link: string
@@ -26,7 +26,7 @@ export default function Navbar() {
   const router = useRouter()
   const [isOtherSelected, changeSelected] = useState(false)
 
-  const user = useSelector<RootState>(state => state.user)
+  const user = useSelector(state => state.user)
 
   const clickTab = () => changeSelected(true)
 
