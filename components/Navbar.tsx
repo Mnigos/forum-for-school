@@ -1,8 +1,10 @@
 import * as Tabs from '@radix-ui/react-tabs'
-import { Button, cx } from '@vechaiui/react'
+import { Button, Avatar, cx } from '@vechaiui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { store } from '~/store'
 
 interface Tab {
   link: string
@@ -23,11 +25,18 @@ const tabs: Tab[] = [
 export default function Navbar() {
   const router = useRouter()
   const [isOtherSelected, changeSelected] = useState(false)
+  const [username, setUsername] = useState('')
+
+  const user = store.getState().user
+
+  useEffect(() => {
+    setUsername(user.username)
+  }, [store.getState().user])
 
   const clickTab = () => changeSelected(true)
 
   return (
-    <div className="flex justify-between w-screen py-4">
+    <div className="flex justify-between py-4">
       <Tabs.Root className="flex flex-col mx-12" defaultValue="">
         <Tabs.List className="flex flex-row justify-start">
           {tabs.map((tab, index) => (
@@ -52,17 +61,27 @@ export default function Navbar() {
         </Tabs.List>
       </Tabs.Root>
 
-      <div className="flex gap-4 mx-6">
-        <Link href="/auth/login" passHref>
-          <Button color="primary" className="cursor-pointer">
-            Login
-          </Button>
-        </Link>
-        <Link href="/auth/register" passHref>
-          <Button color="primary" variant="solid" className="cursor-pointer">
-            Register
-          </Button>
-        </Link>
+      <div className="flex gap-4 mx-4">
+        {username ? (
+          <Avatar name={username} size="xl"></Avatar>
+        ) : (
+          <>
+            <Link href="/auth/login" passHref>
+              <Button color="primary" className="cursor-pointer">
+                Login
+              </Button>
+            </Link>
+            <Link href="/auth/register" passHref>
+              <Button
+                color="primary"
+                variant="solid"
+                className="cursor-pointer"
+              >
+                Register
+              </Button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   )

@@ -39,7 +39,9 @@ export default function Home() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(res => setUsername(res.data.username, dispatch))
+      .then(res => {
+        setUsername(res.data.name, dispatch)
+      })
       .catch(() => router.push('/auth/login'))
   })
 
