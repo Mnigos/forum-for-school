@@ -2,9 +2,9 @@ import * as Tabs from '@radix-ui/react-tabs'
 import { Button, Avatar, cx } from '@vechaiui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-import { store } from '~/store'
+import { useSelector } from '~/store'
 
 interface Tab {
   link: string
@@ -25,13 +25,8 @@ const tabs: Tab[] = [
 export default function Navbar() {
   const router = useRouter()
   const [isOtherSelected, changeSelected] = useState(false)
-  const [username, setUsername] = useState('')
 
-  const user = store.getState().user
-
-  useEffect(() => {
-    setUsername(user.username)
-  }, [store.getState().user])
+  const user = useSelector(state => state.user)
 
   const clickTab = () => changeSelected(true)
 
@@ -62,8 +57,8 @@ export default function Navbar() {
       </Tabs.Root>
 
       <div className="flex gap-4 mx-4">
-        {username ? (
-          <Avatar name={username} size="xl"></Avatar>
+        {user.username ? (
+          <Avatar name={user.username} size="xl"></Avatar>
         ) : (
           <>
             <Link href="/auth/login" passHref>
