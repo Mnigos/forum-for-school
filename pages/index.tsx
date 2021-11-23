@@ -5,21 +5,18 @@ import PostCard from '~/components/posts/PostCard'
 import DefaultLayout from '~/layouts/default'
 import { DialogProvider } from '~/providers/DialogProvider'
 
-const loremIpsum =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
-
 const cards = [
   {
+    _id: '12345678iefsefg',
     title: 'First Card',
-    body: loremIpsum,
   },
   {
+    _id: '12345678iawdawdawd',
     title: 'Second Card',
-    body: loremIpsum,
   },
   {
+    _id: '12345678iawdawdawdsrhgh',
     title: 'Third Card',
-    body: loremIpsum,
   },
 ]
 
@@ -32,8 +29,8 @@ export default function Home() {
         </DialogProvider>
 
         <div className="flex flex-col gap-5 w-3/4">
-          {cards.map(({ title, body }, index) => (
-            <PostCard title={title} body={body} key={index} />
+          {cards.map(({ title, _id }, index) => (
+            <PostCard title={title} _id={_id} key={index} />
           ))}
         </div>
       </div>
