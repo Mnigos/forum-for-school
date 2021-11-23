@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
 
-import { get, post } from '~/axios-instance'
+import { getWithToken, post } from '~/axios-instance'
 import { LoginState } from '~/interfaces/LoginState'
 import { capitalize } from '~/utils/capitalize'
 import { saveToken } from '~/utils/saveToken'
@@ -107,11 +107,7 @@ export default function LoginForm() {
       const token = response.access_token
 
       saveToken(token, dispatch)
-      const user = await get('/auth', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const user = await getWithToken('/auth', token)
 
       setUsername(user.data.name, dispatch)
 

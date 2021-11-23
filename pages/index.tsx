@@ -6,7 +6,7 @@ import CreatePostCard from '~/components/posts/CreatePostCard'
 import PostCard from '~/components/posts/PostCard'
 import DefaultLayout from '~/layouts/default'
 import { DialogProvider } from '~/providers/DialogProvider'
-import { get } from '~/axios-instance'
+import { getWithToken } from '~/axios-instance'
 import { store } from '~/store'
 import { setUsername } from '~/utils/setUsername'
 
@@ -31,11 +31,7 @@ export default function Home() {
   const token = store.getState().token
 
   useEffect(() => {
-    get('/auth', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    getWithToken('/auth', token)
       .then(res => {
         setUsername(res.data.name, dispatch)
       })
@@ -49,7 +45,7 @@ export default function Home() {
           <CreatePostCard />
         </DialogProvider>
 
-        <div className="flex flex-col gap-5 w-3/4">
+        <div className="flex flex-col w-3/4 gap-5">
           {cards.map(({ title, _id }, index) => (
             <PostCard title={title} _id={_id} key={index} />
           ))}
