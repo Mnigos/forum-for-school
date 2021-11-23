@@ -3,13 +3,14 @@ import { Button } from '@vechaiui/button'
 import Link from 'next/link'
 import { Link as StyledLink } from '@vechaiui/react'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 
 import { PasswordInput } from './PasswordInput'
 import UsernameInput from './UsernameInput'
 
 import { capitalize } from '~/utils/capitalize'
-import { User } from '~/interfaces/User'
 import { post } from '~/axios-instance'
+import { saveToken } from '~/utils/saveToken'
 
 interface RegisterState {
   username: string
@@ -25,13 +26,14 @@ const initialRegisterState: RegisterState = {
 
 export default function RegisterForm() {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initialRegisterState)
   const [errors, setError] = useState(initialRegisterState)
 
   async function register(
-    values: User
-  ): Promise<{ access_token: string } | boolean> {
+    values: Omit<RegisterState, 'repeatedPassword'>
+  ): Promise<{ access_token: string } | false> {
     const credentials = {
       name: values.username,
       pass: values.password,
@@ -114,14 +116,14 @@ export default function RegisterForm() {
 
     const response = await register({ username, password })
 
-    if (!response) {
+    if (response) {
       setLoading(false)
 
-      return
+      saveToken(response.access_token, dispatch)
+      router.push('/')
     }
 
     setLoading(false)
-    router.push('/')
   }
 
   return (
