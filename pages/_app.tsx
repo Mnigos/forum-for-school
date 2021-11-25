@@ -2,15 +2,18 @@ import '../styles/globals.css'
 import { VechaiProvider } from '@vechaiui/react'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { Provider } from 'react-redux'
+import { IdProvider } from '@radix-ui/react-id'
 
 import { store } from '~/store'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <VechaiProvider>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      <IdProvider>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </IdProvider>
     </VechaiProvider>
   )
 }
