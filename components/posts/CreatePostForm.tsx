@@ -56,7 +56,7 @@ export default function CreatePostForm() {
     })
   }
 
-  function validate(values: CreatePost) {
+  function validate(values: CreatePost): boolean {
     const foundedErrors = {
       title: '',
       content: '',
@@ -76,14 +76,26 @@ export default function CreatePostForm() {
     return !content && !title ? true : false
   }
 
-  async function handleSubmitCreate(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmitCreate(
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault()
 
     if (!validate(formValues)) return
 
     setIsCreating(true)
 
-    await createPost(token, formValues)
+    try {
+      await createPost(token, formValues)
+    } catch {
+      setIsCreating(false)
+      setErrors({
+        ...errors,
+        message: 'Something went wrong...',
+      })
+    }
+
+    closeDialog()
   }
 
   return (
