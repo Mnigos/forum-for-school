@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import router from 'next/router'
 import { useDispatch } from 'react-redux'
 
@@ -9,24 +9,12 @@ import { DialogProvider } from '~/providers/DialogProvider'
 import { getWithToken } from '~/axios-instance'
 import { store } from '~/store'
 import { setUsername } from '~/utils/setUsername'
-
-const cards = [
-  {
-    _id: '12345678iefsefg',
-    title: 'First Card',
-  },
-  {
-    _id: '12345678iawdawdawd',
-    title: 'Second Card',
-  },
-  {
-    _id: '12345678iawdawdawdsrhgh',
-    title: 'Third Card',
-  },
-]
+import { getPosts } from '~/utils/api/getPosts'
+import { Post } from '~/interfaces/Post'
 
 export default function Home() {
   const dispatch = useDispatch()
+  const [posts, setPosts] = useState([] as Post[])
 
   const token = store.getState().token
 
@@ -36,7 +24,9 @@ export default function Home() {
         setUsername(res.data.name, dispatch)
       })
       .catch(() => router.push('/auth/login'))
-  })
+
+    getPosts(token).then(data => setPosts(data))
+  }, [])
 
   return (
     <DefaultLayout>
@@ -46,7 +36,7 @@ export default function Home() {
         </DialogProvider>
 
         <div className="flex flex-col w-3/4 gap-5">
-          {cards.map(({ title, _id }, index) => (
+          {posts.map(({ title, _id }, index) => (
             <PostCard title={title} _id={_id} key={index} />
           ))}
         </div>
