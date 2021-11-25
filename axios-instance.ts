@@ -12,3 +12,7 @@ export const { post, get, request, head, put, patch } = instance
 export const getWithToken = (url: string, token: string) => {
   return get(url, { headers: { Authorization: `Bearer ${token}` } })
 }
+
+export const postWithToken = (url: string, token: string, body?: any) => {
+  return post(url, body, { headers: { Authorization: `Bearer ${token}` } })
+}
