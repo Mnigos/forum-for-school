@@ -1,4 +1,5 @@
 import * as Tabs from '@radix-ui/react-tabs'
+import { IdProvider } from '@radix-ui/react-id'
 import { Button, Avatar, cx } from '@vechaiui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -32,29 +33,31 @@ export default function Navbar() {
 
   return (
     <div className="flex justify-between py-4">
-      <Tabs.Root className="flex flex-col mx-12" defaultValue="">
-        <Tabs.List className="flex flex-row justify-start">
-          {tabs.map((tab, index) => (
-            <Link href={tab.link} key={index} passHref>
-              <Tabs.Trigger
-                onClick={clickTab}
-                value={tab.name}
-                className={cx(
-                  'px-3 py-2 -mb-px text-sm text-center whitespace-nowrap focus:outline-none cursor-pointer',
-                  'flex-shrink-0 inline-block rounded-md',
-                  'text-neutral-600 bg-transparent',
-                  'hover:text-neutral-900',
-                  router.pathname === tab.link && !isOtherSelected
-                    ? 'text-neutral-900 bg-neutral-200'
-                    : 'selected:text-neutral-900 selected:bg-neutral-200'
-                )}
-              >
-                {tab.name}
-              </Tabs.Trigger>
-            </Link>
-          ))}
-        </Tabs.List>
-      </Tabs.Root>
+      <IdProvider>
+        <Tabs.Root className="flex flex-col mx-12" defaultValue="">
+          <Tabs.List className="flex flex-row justify-start">
+            {tabs.map((tab, index) => (
+              <Link href={tab.link} key={index} passHref>
+                <Tabs.Trigger
+                  onClick={clickTab}
+                  value={tab.name}
+                  className={cx(
+                    'px-3 py-2 -mb-px text-sm text-center whitespace-nowrap focus:outline-none cursor-pointer',
+                    'flex-shrink-0 inline-block rounded-md',
+                    'text-neutral-600 bg-transparent',
+                    'hover:text-neutral-900',
+                    router.pathname === tab.link && !isOtherSelected
+                      ? 'text-neutral-900 bg-neutral-200'
+                      : 'selected:text-neutral-900 selected:bg-neutral-200'
+                  )}
+                >
+                  {tab.name}
+                </Tabs.Trigger>
+              </Link>
+            ))}
+          </Tabs.List>
+        </Tabs.Root>
+      </IdProvider>
 
       <div className="flex gap-4 mx-4">
         {user.username ? (
