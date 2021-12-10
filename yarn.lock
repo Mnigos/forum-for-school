@@ -1139,10 +1139,10 @@
     "@vechaiui/theme" "0.3.1"
     "@vechaiui/utils" "^0.1.0"
 
-"@vechaiui/core@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@vechaiui/core/-/core-0.5.1.tgz#76aeccfccc9a7b38abdc5e377199671bfbd4f6be"
-  integrity sha512-XDvJWVXOiyCwtnl+ywKYdQuLRT/h0ymLWAB9j2vOH95lckHZOYO1HzcGKqDHilPgBVIqDTMQZDfwtj58012qKw==
+"@vechaiui/core@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@vechaiui/core/-/core-0.6.0.tgz#feae03ab5955b18e85786abfd3630add68065195"
+  integrity sha512-Fs3QudUhRLzd+0cNAiL26eGjOGL7NEvF4uHvUabocnio3ROCPrJHQtgTWaX4JAOmGIG6viL9Z+xy5z8SlUraYw==
 
 "@vechaiui/divider@0.1.6":
   version "0.1.6"
